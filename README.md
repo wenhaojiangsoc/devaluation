@@ -21,4 +21,16 @@ There are three kinds of data included to reproduce most of the results in the p
 * `dimension and mapping`: The dimension words I used to create gender, prestige, and other cultural dimensions and subspace. I also include the mapping crosswalk that converts each 1950 COC-based occupation title into single-word occupations.
 * `census and merged`: Cleaned data with variables from IPUMS (Decennial Census) that were used in the study. I also include the final merged dataset with text-based measures and census-based statistics used in the final main analysis.
 
+### Code
+
+I include most codes I used to generate the main results of the paper.
+
+* Codes in the `measures` folder were used to construct semantic subspace and generate occupation-specific measures of gender typing, prestige, and other cultural properties. `3CosAdd.py` can be used to search for the closest word to solves the word analogy problem.
+* `occ1990.R` generates the cleaned Census-based measures of e.g., percent female and other covariates.
+* `verification.R`provides the validation steps as used in the main paper and in appendix.
+* `econometrics.R` and `plot.R` offers most results and figures as appeared in the paper.
+* `fullcontrol.R`, `robustness.R`, and `dynamic.R` provides results that appear in the robustness check section, including the regression with full market-based controls and the estimation against a reversed causal process.
+* `function.R` provides the key steps to implement the decomposition as introduced by [Ishimaru (2022)](
+https://doi.org/10.48550/arXiv.2103.12374), including both scenarios when controls are and are not present. This can be used to conduct any other TWFE-based analysis with a continuous treatment, when the treatment effect is temporally heterogeneous.
+* `mediation.R` conducts the causal mediation analysis in the paper.
 
