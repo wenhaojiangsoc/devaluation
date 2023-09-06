@@ -23,14 +23,26 @@ There are three kinds of data included to reproduce most of the results in the p
 
 ### Code
 
-I include most codes I used to generate the main results of the paper.
+I include three sets of codes I used to generate the main results of the paper.
 
-* Codes in the `measures` folder were used to construct semantic subspace and generate occupation-specific measures of gender typing, prestige, and other cultural properties. `3CosAdd.py` can be used to search for the closest word to solves the word analogy problem.
-* `occ1990.R` generates the cleaned Census-based measures of e.g., percent female and other covariates.
-* `verification.R`provides the validation steps as used in the main paper and in appendix.
-* `econometrics.R` and `plot.R` offers most results and figures as appeared in the paper.
-* `fullcontrol.R`, `robustness.R`, and `dynamic.R` provides results that appear in the robustness check section, including the regression with full market-based controls and the estimation against a reversed causal process.
-* `function.R` provides the key steps to implement the decomposition as introduced by [Ishimaru (2022)](
-https://doi.org/10.48550/arXiv.2103.12374), including both scenarios when controls are and are not present. This can be used to conduct any other TWFE-based analysis with a continuous treatment, when the treatment effect is temporally heterogeneous.
-* `mediation.R` conducts the causal mediation analysis in the paper.
+* `measures` folder:
+
+    * `distance.ipynb` and `embeddings.py` were used to construct semantic subspace and generate occupation-specific measures of gender typing, prestige, and other cultural properties. 
+    * `3CosAdd.py` can be used to search for the closest word to solves the word analogy problem.
+    
+* `analysis` folder:
+
+    * `occ1990.R` generates the cleaned Census-based measures of e.g., percent female and other covariates.
+    * `verification.R`provides the validation steps as used in the main paper and in appendix.
+    * `econometrics.R` and `plot.R` offers most results and figures as appeared in the paper.
+    * `fullcontrol.R`, `robustness.R`, and `dynamic.R` provides results that appear in the robustness check section, including the regression with full market-based controls and the estimation against a reversed causal process.
+    * `function.R` provides the key steps to implement the decomposition as introduced by [Ishimaru (2022)](
+    https://doi.org/10.48550/arXiv.2103.12374), including both scenarios when controls are and are not present. This can be used to conduct any other TWFE-based analysis with a continuous treatment, when the treatment effect is temporally heterogeneous.
+    * `mediation.R` conducts the causal mediation analysis in the paper.
+    
+* `HPC` folder:
+
+    * `python` folder provides all main codes used to 1. read vocabularies in Google Ngram; and 2. train a word2vec model.
+    * `batch` folder gives all batch files I used in HPC application. You will need to customize it for your own needs.
+    * If you want to create your own embeddings using these codes, you will need to create a separate folder called `models` to store intermediate checkpoints. Some HPC machines may impose a 7-day limit in running jobs, and saving checkpoints for heavy jobs is necessary as in my case.
 
