@@ -24,11 +24,3 @@ poor poorer poorest poverty destitute needy impoverished economical impecunious 
 good moral good honest virtuous virtue righteous chaste principled unquestionable noble uncorrupt scrupulous altruistic chivalrous honest commendable pure holy valiant upstanding guiltless decent chaste righteous ethical
 : immoral-words
 evil immoral bad dishonest sinful vice wicked transgressive unprincipled questionable nefarious corrupt unscrupulous selfish knavish crooked reprehensible impure unholy fiendish villainous guilty indecent unsavory odious unethical
-: grammar-female-words
-blonde confidante
-: grammar-male-words
-blond confidant
-: civil-words
-civil movement
-: uncivil-words
-is are
