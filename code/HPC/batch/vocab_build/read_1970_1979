@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=4
+#SBATCH --time=167:59:00
+#SBATCH --mem=16GB
+#SBATCH --job-name=read_1970_1979
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=wj2068@nyu.edu
+
+module purge
+module load python/intel/3.8.6
+cd /vast/wj2068/codes/python/10_year/build_vocab
+python read_1970_1979.py
