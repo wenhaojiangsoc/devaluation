@@ -1,0 +1,34 @@
+: female-words
+she daughter hers her mother woman girl herself female sister daughters mothers women girls females sisters aunt aunts niece nieces
+: male-words
+he son his him father man boy himself male brother sons fathers men boys males brothers uncle uncles nephew nephews
+: asian-words
+cho wong tang huang chu chung ng wu liu chen lin yang kim chang shah wang li khan singh hong
+: hispanic-words
+ruiz alvarez vargas castillo gomez soto gonzalez sanchez rivera mendoza martinez torres rodriguez perez lopez medina diaz garcia castro cruz
+: white-words
+harris nelson robinson thompson moore wright anderson clark jackson taylor scott davis allen adams lewis williams jones wilson martin johnson
+: prestige-words
+prestigious honorable esteemed reputable distinguished eminent illustrious renowned acclaimed dignitary venerable exalted estimable prominent
+: common-words
+unprestigious dishonorable lowly disreputable commonplace mundane humble humble prosaic modest commoner unpretentious ordinary common
+: education-words
+educated learned knowledgeable trained taught literate schooled tutored lettered
+: uneducation-words
+uneducated unlearned ignorant untrained untaught illiterate unschooled untutored unlettered
+: affluent-words
+rich richer richest affluent advantaged wealthy exorbitant expensive exquisite extravagant flush invaluable lavish luxuriant luxurious luxury moneyed opulent plush precious priceless privileged propertied prosperous developed solvency successful sumptuous swanky thriving upscale valuable classy ritzy opulence solvent affluence posh costly
+: poor-words
+poor poorer poorest poverty destitute needy impoverished economical impecunious inexpensive ruined necessitous skin cheap penurious threadbare cheap unmonied indigent worthless underprivileged bankrupt unprosperous underdeveloped insolvency unsuccessful plain basic disadvantaged squalid valueless beggarly ramshackle indigence insolvent moneyless penniless penury indigence
+: moral-words
+good moral good honest virtuous virtue righteous chaste principled unquestionable noble uncorrupt scrupulous altruistic chivalrous honest commendable pure holy valiant upstanding guiltless decent chaste righteous ethical
+: immoral-words
+evil immoral bad dishonest sinful vice wicked transgressive unprincipled questionable nefarious corrupt unscrupulous selfish knavish crooked reprehensible impure unholy fiendish villainous guilty indecent unsavory odious unethical
+: grammar-female-words
+blonde confidante
+: grammar-male-words
+blond confidant
+: civil-words
+civil movement
+: uncivil-words
+is are
