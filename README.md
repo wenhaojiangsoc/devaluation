@@ -17,7 +17,7 @@ COHA and COCA can be purchased from:\
 
 There are three kinds of data included to reproduce the main results.
 
-* `embedding vectors`: All embedding vectors I trained using word2vec (*gensim 4.3.0*) by decade for the three corpora.
+* `embedding vectors`: Embedding vectors I trained using word2vec (*gensim 4.3.0*) by decade for COHA. Due to the size limit, you can find embeddings of [COCA](https://www.dropbox.com/scl/fo/9wl73jf8yrjy7ss63uwwg/h?rlkey=xa9ufs8ylilly4yx44ozmr1zl&dl=0) and [Ngram](https://www.dropbox.com/scl/fo/y69bxvjx9w1ew16rubl8i/h?rlkey=lgw2zapm4mt0yw2bk0lakgfa7&dl=0) in the above links.
 * `dimension and mapping`: The dimension words I used to create gender, prestige, and other cultural dimensions and subspace. I also include the mapping crosswalk that converts each 1950 COC-based occupation title into single-word occupations.
 * `census and merged`: Cleaned data with variables from IPUMS (Decennial Census) that were used in the study. I also include the final merged dataset with text-based measures and census-based statistics for main analysis. You can directly use the merged file with name `corpus.csv` to generate results.
 
