@@ -1,6 +1,6 @@
 # The Cultural Devaluation of Feminization Work
 
-Repository for replication codes and data for the paper *The Cultural Devaluation of Feminized Work*, currently under peer review.
+Repository for replication codes and data for the paper *The Cultural Devaluation of Feminized Work*, that is conditionally accepted by the *American Sociological Review*.
 
 ## Overview about the Repository
 
