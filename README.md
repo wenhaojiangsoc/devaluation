@@ -33,8 +33,7 @@ I include three sets of codes I used to generate the main results.
 * `analysis` folder:
 
     * `occ1950.R` generates the cleaned Census-based measures of e.g., percent female and other covariates.
-    * `verification.R`provides the validation steps that appear in the main text and in appendix.
-    * `main.R` and `plot.R` offers results and figures that appear in the main text.
+    * `main.R` offers results and figures that appear in the main text.
     * `robustness.R` provides results that appear in the robustness check section and in Appendix.
     * `function.R` provides the key steps to implement the decomposition as introduced by [Ishimaru (2022)](
     https://doi.org/10.48550/arXiv.2103.12374), including both scenarios when controls are and are not present. This can be used to conduct any other TWFE-based analysis with a continuous treatment, when the treatment effect is temporally heterogeneous.
