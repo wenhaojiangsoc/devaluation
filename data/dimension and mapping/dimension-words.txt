@@ -2,12 +2,6 @@
 she daughter hers her mother woman girl herself female sister daughters mothers women girls females sisters aunt aunts niece nieces
 : male-words
 he son his him father man boy himself male brother sons fathers men boys males brothers uncle uncles nephew nephews
-: asian-words
-cho wong tang huang chu chung ng wu liu chen lin yang kim chang shah wang li khan singh hong
-: hispanic-words
-ruiz alvarez vargas castillo gomez soto gonzalez sanchez rivera mendoza martinez torres rodriguez perez lopez medina diaz garcia castro cruz
-: white-words
-harris nelson robinson thompson moore wright anderson clark jackson taylor scott davis allen adams lewis williams jones wilson martin johnson
 : prestige-words
 prestigious honorable esteemed reputable distinguished eminent illustrious renowned acclaimed dignitary venerable exalted estimable prominent
 : common-words
@@ -20,7 +14,15 @@ uneducated unlearned ignorant untrained untaught illiterate unschooled untutored
 rich richer richest affluent advantaged wealthy exorbitant expensive exquisite extravagant flush invaluable lavish luxuriant luxurious luxury moneyed opulent plush precious priceless privileged propertied prosperous developed solvency successful sumptuous swanky thriving upscale valuable classy ritzy opulence solvent affluence posh costly
 : poor-words
 poor poorer poorest poverty destitute needy impoverished economical impecunious inexpensive ruined necessitous skin cheap penurious threadbare cheap unmonied indigent worthless underprivileged bankrupt unprosperous underdeveloped insolvency unsuccessful plain basic disadvantaged squalid valueless beggarly ramshackle indigence insolvent moneyless penniless penury indigence
-: moral-words
-good moral good honest virtuous virtue righteous chaste principled unquestionable noble uncorrupt scrupulous altruistic chivalrous honest commendable pure holy valiant upstanding guiltless decent chaste righteous ethical
-: immoral-words
-evil immoral bad dishonest sinful vice wicked transgressive unprincipled questionable nefarious corrupt unscrupulous selfish knavish crooked reprehensible impure unholy fiendish villainous guilty indecent unsavory odious unethical
+: good-words
+moral good nice positive virtuous beneficial pleasant admirable constructive blessed honest trustworthy enlightening welcoming righteous compassionate faithful generous sincere decent chaste commendable
+: bad-words
+immoral bad awful negative sinful harmful unpleasant contemptible destructive cursed deceitful unreliable misleading hostile wicked cruel betraying stingy hypocritical evil dishonest indecent reprehensible
+: strong-words
+big powerful dominant robust capable authoritative mighty sturdy bold influential resilient tenacious assertive commanding controlling sovereign predominant paramount omnipotent
+: weak-words
+little powerless submissive fragile incapable ineffectual feeble delicate timid insignificant vulnerable yielding meek subservient compliant dependent peripheral trivial impotent
+: active-words
+fast lively loud sharp active
+: passive-words
+slow quiet silent static calm

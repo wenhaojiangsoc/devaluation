@@ -5,6 +5,7 @@ from sklearn.preprocessing import normalize
 from typing import Dict, List, Tuple
 from itertools import chain
 import requests
+from statistics import mode
 
 class Embeddings:
     """
@@ -156,7 +157,10 @@ def get_dimension(embeddings, dimension, category: str):
         "prestige": ["prestige-words","common-words"],
         "education": ["education-words","uneducation-words"],
         "income": ["affluent-words","poor-words"],
-        "moral": ["moral-words","immoral-words"]
+        "moral": ["moral-words","immoral-words"],
+        "evaluation": ["good-words","bad-words"],
+        "potency": ["strong-words","weak-words"],
+        "activity": ["active-words","passive-words"]
     }
     
     schema = centroid(embeddings, dimension, schema_words_dict[category][0]) - \
@@ -175,7 +179,10 @@ def get_pca(embeddings, dimension, category: str):
         "prestige": ["prestige-words","common-words"],
         "education": ["education-words","uneducation-words"],
         "income": ["affluent-words","poor-words"],
-        "moral": ["moral-words","immoral-words"]
+        "moral": ["moral-words","immoral-words"],
+        "evaluation": ["good-words","bad-words"],
+        "potency": ["strong-words","weak-words"],
+        "activity": ["active-words","passive-words"]
     }
 
     from sklearn.decomposition import PCA
@@ -219,5 +226,46 @@ def cosine_sim_average(dimension_vector,embeddings,occupation):
         d = {'occupation_1': pd.Series(np.concatenate(cosine_sim(dimension_vector, embeddings[occupation_1])))}
         df = pd.DataFrame(data=d)
         output = np.nanmean(df, axis=1)
+        output[output==0] = np.nan
+        return pd.Series(output)
+    
+
+def cosine_sim_average_weight(dimension_vector,embeddings,occupation,
+                             weight_1,weight_2,weight_3,weight_4):
+    """
+    Retrieves the mean distance of single occupation words to each category
+    """
+    
+    if occupation.str.split(", ",expand=True).shape[1] == 4:
+        occupation_1 = occupation.str.split(", ",expand=True)[0]
+        occupation_2 = occupation.str.split(", ",expand=True)[1]
+        occupation_3 = occupation.str.split(", ",expand=True)[2]
+        occupation_4 = occupation.str.split(", ",expand=True)[3]
+        d = {'occupation_1': pd.Series(np.concatenate(cosine_sim(dimension_vector, embeddings[occupation_1]))), 
+             'occupation_2': pd.Series(np.concatenate(cosine_sim(dimension_vector, embeddings[occupation_2]))), 
+             'occupation_3': pd.Series(np.concatenate(cosine_sim(dimension_vector, embeddings[occupation_3]))),
+             'occupation_4': pd.Series(np.concatenate(cosine_sim(dimension_vector, embeddings[occupation_4])))}
+        df = pd.DataFrame(data=d)
+        
+        ## append weight
+        df['weight_1'] = weight_1
+        df['weight_2'] = weight_2
+        df['weight_3'] = weight_3
+        df['weight_4'] = weight_4
+        df.replace(mode(weight_4), np.nan, inplace=True)
+        
+        ## weighted mean
+        df.iloc[:, 4:] = df.iloc[:, 4:].fillna(0)
+        row_sums = df.iloc[:, 4:].sum(axis=1)
+        df.iloc[:, 4:] = df.iloc[:, 4:].div(row_sums, axis=0)
+        weighted_values = df.iloc[:, :4].values * df.iloc[:, 4:].values
+        values_mask = ~np.isnan(df.iloc[:, :4].values)
+        weights_mask = ~np.isnan(df.iloc[:, 4:].values)
+        combined_mask = values_mask & weights_mask
+        masked_weighted_values = np.where(combined_mask, weighted_values, 0)
+        masked_weights = np.where(combined_mask, df.iloc[:, 4:].values, 0)
+        sum_weighted_values = np.nansum(masked_weighted_values, axis=1)
+        sum_weights = np.nansum(masked_weights, axis=1)
+        output = np.divide(sum_weighted_values, sum_weights, where=sum_weights!=0)
         output[output==0] = np.nan
         return pd.Series(output)

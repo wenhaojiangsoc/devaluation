@@ -11,14 +11,23 @@ library(expss)
 setwd('/Users/wenhao/Dropbox/Devaluation Word Embeddings/Data/Main')
 ma <- read_dta("occ1950.dta")
 
-## keep working age population 18-65
-ma <- ma[which(ma$age >= 18 & ma$age <= 65), ]
+## keep working age population 25-64
+ma <- ma[which(ma$age >= 25 & ma$age <= 64), ]
+
+## keep those who are economically active (incwage!=0)
+ma[which(ma$incwage>=999998),"incwage"] <- NA
+ma <- ma %>%
+  filter((incwage>0&!is.na(incwage)&year>=1940) |
+           (year<1940))
 
 ## New variable: observations counts
 ma <- ma %>% dplyr::group_by(year, occ1950) %>% dplyr::mutate(count = sum(perwt, na.rm=T))
 
+## New Variable: mean age
+ma <- ma %>% group_by(year, occ1950) %>% mutate(mean_age = weighted.mean(age, w=perwt, na.rm=T))
+
 ## New variable: percent female
-ma <- ma %>% group_by(year, occ1950) %>% mutate(percent_f = weighted.mean(sex - 1, w=dplyr::coalesce(perwt,0), na.rm=T))
+ma <- ma %>% group_by(year, occ1950) %>% mutate(percent_f = weighted.mean(sex-1, w=perwt, na.rm=T))
 
 ## new variable: race
 ma <- ma %>% rename(race_2 = race)
@@ -29,9 +38,6 @@ ma[which((ma$race_2 == 4 | ma$race_2 == 5 | ma$race_2 == 6) & ma$hispan == 0), "
 ma[which(ma$hispan == 1 | ma$hispan == 2 | ma$hispan == 3 | ma$hispan == 4), "race"] <- 4
 ma[which(is.na(ma$race)), "race"] <- 5
 ma <- ma %>% dplyr::select(-c(race_2, hispan))
-
-## top-truncate incwage to be less than 800000
-ma[which(ma$incwage>=8e+5),"incwage"] <- NA
 
 ## new variable: continuous work hours per week
 ma[which(ma$hrswork2 == 1 & ma$year < 1980), "hours"] <- 7.5
@@ -57,6 +63,7 @@ ma[which(ma$wkswork2 == 6 & is.na(ma$weeks)), "weeks"] <- 51
 ma$hours_ann <- ma$weeks*ma$hours
 ma$wage_h <- ma$incwage/ma$hours_ann  
 ma$rwage_h <- ma$wage_h*ma$cpi99
+ma[sapply(ma, is.infinite)] <- NA
 
 ## new variable: continuous years in education
 ma[which(ma$educd == 0), "eduyear"] <- 0
@@ -97,25 +104,21 @@ ma[which(ma$educd == 116), "eduyear"] <- 20
 ## new variable: potential labor market experience
 ma$lmexp <- ma$age - ma$eduyear - 6  
 
+#### group-wise variables ####
+
 ## wages
-ma <- ma %>% group_by(year, occ1950) %>% mutate(wage_male = median(rwage_h[sex == 1],na.rm=T)) %>% ungroup()
-ma <- ma %>% group_by(year, occ1950) %>% mutate(wage_fem = median(rwage_h[sex == 2],na.rm=T)) %>% ungroup()
-ma <- ma %>% group_by(year, occ1950) %>% mutate(wage = median(rwage_h,na.rm=T)) %>% ungroup()
+ma <- ma %>% group_by(year, occ1950) %>% mutate(mean_wage = weighted.mean(rwage_h, w=perwt, na.rm=T)) %>% ungroup()
+ma <- ma %>% group_by(year, occ1950) %>% mutate(mean_wage_men = weighted.mean(rwage_h[sex==1], w=perwt[sex==1], na.rm=T)) %>% ungroup()
+ma <- ma %>% group_by(year, occ1950) %>% mutate(mean_wage_women = weighted.mean(rwage_h[sex==2], w=perwt[sex==2], na.rm=T)) %>% ungroup()
 
 ## education mean
-ma <- ma %>% group_by(year, occ1950) %>% mutate(edu_male = mean(eduyear[sex == 1],na.rm=T)) %>% ungroup()
-ma <- ma %>% group_by(year, occ1950) %>% mutate(edu_fem = mean(eduyear[sex == 2],na.rm=T)) %>% ungroup()
-ma <- ma %>% group_by(year, occ1950) %>% mutate(edu = mean(eduyear,na.rm=T)) %>% ungroup()
+ma <- ma %>% group_by(year, occ1950) %>% mutate(mean_edu = weighted.mean(eduyear, w=perwt, na.rm=T)) %>% ungroup()
 
 ## years of experience
-ma <- ma %>% group_by(year, occ1950) %>% mutate(lmexp_male = mean(lmexp[sex == 1],na.rm=T)) %>% ungroup()
-ma <- ma %>% group_by(year, occ1950) %>% mutate(lmexp_fem = mean(lmexp[sex == 2],na.rm=T)) %>% ungroup()
-ma <- ma %>% group_by(year, occ1950) %>% mutate(lmexp = mean(lmexp,na.rm=T)) %>% ungroup()
+ma <- ma %>% group_by(year, occ1950) %>% mutate(mean_lmexp = weighted.mean(lmexp, w=perwt, na.rm=T)) %>% ungroup()
 
 ## hours of work
-ma <- ma %>% group_by(year, occ1950) %>% mutate(hours_male = mean(hours[sex == 1],na.rm=T)) %>% ungroup()
-ma <- ma %>% group_by(year, occ1950) %>% mutate(hours_fem = mean(hours[sex == 2],na.rm=T)) %>% ungroup()
-ma <- ma %>% group_by(year, occ1950) %>% mutate(hours = mean(hours,na.rm=T)) %>% ungroup()
+ma <- ma %>% group_by(year, occ1950) %>% mutate(mean_hours = weighted.mean(hours, w=perwt, na.rm=T)) %>% ungroup()
 
 ## race
 library(fastDummies)
@@ -134,30 +137,68 @@ occ1950 <-
             race_3 = mean(race_3,na.rm=T),
             race_4 = mean(race_4,na.rm=T), 
             race_5 = mean(race_5,na.rm=T),
-            incscore = max(occscore,na.rm=T),
-            duncansei = max(sei,na.rm=T),
-            hwsei90 = max(hwsei,na.rm=T),
             presgl = max(presgl,na.rm=T),
             prent90 = max(prent,na.rm=T),
             earnscore = max(erscor50,na.rm=T),
             eduscore = max(edscor50,na.rm=T),
             npboss = max(npboss50,na.rm=T),
-            wage_male = max(wage_male,na.rm=T), 
-            wage_fem = max(wage_fem,na.rm=T),
-            wage = max(wage,na.rm=T),
-            edu_male = max(edu_male,na.rm=T),
-            edu_fem = max(edu_fem,na.rm=T), 
-            edu = max(edu,na.rm=T), 
-            lmexp_male = max(lmexp_male,na.rm=T), 
-            lmexp_fem = max(lmexp_fem,na.rm=T),  
-            lmexp = max(lmexp,na.rm=T), 
-            hours_male = max(hours_male,na.rm=T),
-            hours_fem = max(hours_fem,na.rm=T),
-            hours = max(hours,na.rm=T)
+            mean_wage = max(mean_wage,na.rm=T),
+            mean_wage_men = max(mean_wage_men,na.rm=T),
+            mean_wage_women = max(mean_wage_women,na.rm=T),
+            mean_edu = max(mean_edu,na.rm=T), 
+            mean_lmexp = max(mean_lmexp,na.rm=T), 
+            mean_hours = max(mean_hours,na.rm=T)
             )
 
 ## replace infinite
 occ1950[sapply(occ1950, is.infinite)] <- NA
-occ1950[which(occ1950$edu_fem==0),"edu_fem"] <- NA
+
+## returns to years of education
+library(broom)
+returns_to_education <- ma %>%
+  group_by(occ1950, year) %>%
+  filter(sum(!is.na(eduyear) & !is.na(lmexp) & !is.na(hours) &
+               !is.na(race_1) & !is.na(race_2) & !is.na(race_3) &
+               !is.na(race_4) & !is.na(race_5) & !is.na(sex) & !is.na(wage_h))>2) %>%
+  do(tidy(lm(wage_h ~ eduyear + lmexp + I(lmexp^2) + sex + hours + race_1 + race_2 + race_3 + race_4 + race_5, data = .))) %>%
+  filter(term == "eduyear") %>%
+  select(occ1950, year, estimate)
+occ1950 <- merge(occ1950, returns_to_education,by=c("occ1950","year"),all.x=T)
+
+## create growth/decline of the job
+occ1950 <-
+  occ1950 %>%
+  filter(occ1950<979) %>%
+  group_by(year) %>%
+  mutate(total = sum(count)) %>%
+  mutate(proportion = count/total) %>%
+  group_by(occ1950) %>%
+  mutate(proportion_lag = dplyr::lag(proportion,1),
+         change_prop = (proportion - proportion_lag)/proportion_lag)
+
+## read skill data
+dot1965 <- read_dta("~/Library/CloudStorage/Dropbox/Devaluation Word Embeddings/Data/Misc./DoT1965/DoT1965_OCC1960.dta") %>% mutate(year=1960)
+dot1977 <- read_dta("~/Library/CloudStorage/Dropbox/Devaluation Word Embeddings/Data/Misc./DoT1977/DS0001/DoT1977_OCC1960.dta") %>% 
+  mutate(year=1970) %>% rename(motor=moto)
+dot1991 <- read_dta("~/Library/CloudStorage/Dropbox/Devaluation Word Embeddings/Data/Misc./DoT1991/DoT1991_OCC1960.dta") %>% mutate(year=1990)
+dotskill <- rbind(dot1965,dot1977,dot1991)
+
+## read occ1960 to occ1950 crosswalk
+cross <- read_dta("~/Library/CloudStorage/Dropbox/Devaluation Word Embeddings/Data/Misc./occ1960_1950.dta")
+cross <-
+  cross %>%
+  group_by(occ, occ1950) %>%
+  summarize(count = sum(perwt))
+cross <- 
+  cross %>%
+  group_by(occ) %>%
+  arrange(desc(count)) %>%
+  filter(row_number()==1)
+cross <- cross %>%
+  select(-count) %>%
+  rename(OCC1960=occ)
+dotskill <- merge(dotskill,cross,by="OCC1960",all.x=T)
+dotskill <- dotskill %>% filter(!is.na(occ1950))
+occ1950 <- merge(occ1950,dotskill %>% select(-OCC1960),by=c("occ1950","year"),all.x=T)
 
 write.csv(occ1950,"/Users/wenhao/Dropbox/Devaluation Word Embeddings/Data/Main/occ1950.csv",row.names = FALSE)
