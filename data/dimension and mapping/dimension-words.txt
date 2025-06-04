@@ -1,0 +1,28 @@
+: female-words
+she daughter hers her mother woman girl herself female sister daughters mothers women girls females sisters aunt aunts niece nieces
+: male-words
+he son his him father man boy himself male brother sons fathers men boys males brothers uncle uncles nephew nephews
+: prestige-words
+prestigious honorable esteemed reputable distinguished eminent illustrious renowned acclaimed dignitary venerable exalted estimable prominent
+: common-words
+unprestigious dishonorable lowly disreputable commonplace mundane humble humble prosaic modest commoner unpretentious ordinary common
+: education-words
+educated learned knowledgeable trained taught literate schooled tutored lettered
+: uneducation-words
+uneducated unlearned ignorant untrained untaught illiterate unschooled untutored unlettered
+: affluent-words
+rich richer richest affluent advantaged wealthy exorbitant expensive exquisite extravagant flush invaluable lavish luxuriant luxurious luxury moneyed opulent plush precious priceless privileged propertied prosperous developed solvency successful sumptuous swanky thriving upscale valuable classy ritzy opulence solvent affluence posh costly
+: poor-words
+poor poorer poorest poverty destitute needy impoverished economical impecunious inexpensive ruined necessitous skin cheap penurious threadbare cheap unmonied indigent worthless underprivileged bankrupt unprosperous underdeveloped insolvency unsuccessful plain basic disadvantaged squalid valueless beggarly ramshackle indigence insolvent moneyless penniless penury indigence
+: good-words
+moral good nice positive virtuous beneficial pleasant admirable constructive blessed honest trustworthy enlightening welcoming righteous compassionate faithful generous sincere decent chaste commendable
+: bad-words
+immoral bad awful negative sinful harmful unpleasant contemptible destructive cursed deceitful unreliable misleading hostile wicked cruel betraying stingy hypocritical evil dishonest indecent reprehensible
+: strong-words
+big powerful dominant robust capable authoritative mighty sturdy bold influential resilient tenacious assertive commanding controlling sovereign predominant paramount omnipotent
+: weak-words
+little powerless submissive fragile incapable ineffectual feeble delicate timid insignificant vulnerable yielding meek subservient compliant dependent peripheral trivial impotent
+: active-words
+fast lively loud sharp active
+: passive-words
+slow quiet silent static calm

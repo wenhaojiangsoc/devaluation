@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=5
+#SBATCH --time=167:59:00
+#SBATCH --mem=8GB
+#SBATCH --job-name=train_1920_1929
+#SBATCH --output=train_1920_1929.out
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=wj2068@nyu.edu
+
+module purge
+module load python/intel/3.8.6
+cd /vast/wj2068/codes/python/10_year/train
+python train_1920_1929.py
